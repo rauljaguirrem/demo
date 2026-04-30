@@ -1,0 +1,19 @@
+version: "3.8"
+services:
+  mongo-service:        # nombre interno del servicio
+    image: mongo:7
+    container_name: mongo-service   # que coincida con el servicio
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_DATABASE: usersdb
+    restart: unless-stopped
+
+  webflux-users:
+    image: raul/webflux-users:1.0
+    container_name: webflux-users
+    ports:
+      - "8080:8080"
+    depends_on:
+      - mongo-service
+    restart: unless-stopped
